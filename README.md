@@ -7,6 +7,10 @@
 
 [演示](https://xsai.online/) / [反馈](https://github.com/chengxs1994/ChatGPT-SDImg-Web/issues)
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fchengxs1994%2FChatGPT-SDImg-Web&env=OPENAI_API_KEY&env=CODE&project-name=chatgpt-sdimg-web&repository-name=ChatGPT-SDImg-Web)
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/chengxs1994/ChatGPT-SDImg-Web)
+
 ![cover](./docs/images/img.jpg)
 
 ![cover](./docs/images/user.jpg)
