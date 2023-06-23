@@ -11,6 +11,7 @@
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/chengxs1994/ChatGPT-SDImg-Web)
 
+## 效果展示
 ![cover](./docs/images/img.jpg)
 
 ![cover](./docs/images/img2.jpg)
@@ -26,6 +27,7 @@
 - 用户注册登录，个人中心
 - 次数限制，积分充值
 - 邀请码，邀请链接分享
+- 持续更新，感谢Star。如需定制，欢迎联系
 
 ## 开源计划
 
