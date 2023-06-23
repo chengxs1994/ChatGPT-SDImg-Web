@@ -13,6 +13,8 @@
 
 ![cover](./docs/images/img.jpg)
 
+![cover](./docs/images/img2.jpg)
+
 ![cover](./docs/images/user.jpg)
 
 </div>
@@ -45,7 +47,7 @@
 ## 加入我们
 <div>
 <img src="./docs/images/wx1.jpg" style="width: 45%" />
-<img src="./docs/images/wxg1.jpg" style="width: 45%" />
+<img src="./docs/images/wxg2.jpg" style="width: 45%" />
 <img src="./docs/images/qq.jpg" style="width: 45%" />
 <img src="./docs/images/qqg.jpg" style="width: 45%" />
 </div>
