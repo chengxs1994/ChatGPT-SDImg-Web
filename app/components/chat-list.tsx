@@ -11,12 +11,14 @@ import {
 
 import { useChatStore } from "../store";
 
-import Locale from "../locales";
+import Locale, { getItem, setItem } from "../locales";
 import { Link, useNavigate } from "react-router-dom";
 import { Path } from "../constant";
 import { MaskAvatar } from "./mask";
 import { Mask } from "../store/mask";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import { ReLoginModal } from "./relogin-modal";
+import { userInfo } from "@/app/requests";
 
 export function ChatItem(props: {
   onClick?: () => void;
@@ -119,8 +121,34 @@ export function ChatList(props: { narrow?: boolean }) {
     moveSession(source.index, destination.index);
   };
 
+  const [reLoginShow, setReLoginShow] = useState(true);
+
+  async function userInfoCheck() {
+    var userKey = getItem("USER_KEY");
+    if (!userKey) {
+      setReLoginShow(true);
+      return;
+    }
+    await userInfo()
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status == 200) {
+          setReLoginShow(false);
+        } else {
+          setReLoginShow(true);
+        }
+        return;
+      })
+      .catch((error) => console.error(error));
+  }
+
+  useEffect(() => {
+    userInfoCheck();
+  }, []);
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
+      {reLoginShow && <ReLoginModal onClose={() => setReLoginShow(false)} />}
       <Droppable droppableId="chat-list">
         {(provided) => (
           <div

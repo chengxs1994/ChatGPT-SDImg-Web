@@ -277,58 +277,61 @@ export const useChatStore = create<ChatStore>()(
         });
 
         // make request
-        console.log("[User Input] ", sendMessages);
-        api.llm.chat({
-          messages: sendMessages,
-          config: { ...modelConfig, stream: true },
-          onUpdate(message) {
-            botMessage.streaming = true;
-            if (message) {
-              botMessage.content = message;
-            }
-            set(() => ({}));
-          },
-          onFinish(message) {
-            botMessage.streaming = false;
-            if (message) {
-              botMessage.content = message;
-              get().onNewMessage(botMessage);
-            }
-            ChatControllerPool.remove(
-              sessionIndex,
-              botMessage.id ?? messageIndex,
-            );
-            set(() => ({}));
-          },
-          onError(error) {
-            const isAborted = error.message.includes("aborted");
-            botMessage.content =
-              "\n\n" +
-              prettyObject({
-                error: true,
-                message: error.message,
-              });
-            botMessage.streaming = false;
-            userMessage.isError = !isAborted;
-            botMessage.isError = !isAborted;
+        // console.log("[User Input] ", sendMessages);
+        api.llm.chat(
+          {
+            messages: sendMessages,
+            config: { ...modelConfig, stream: true },
+            onUpdate(message) {
+              botMessage.streaming = true;
+              if (message) {
+                botMessage.content = message;
+              }
+              set(() => ({}));
+            },
+            onFinish(message) {
+              botMessage.streaming = false;
+              if (message) {
+                botMessage.content = message;
+                get().onNewMessage(botMessage);
+              }
+              ChatControllerPool.remove(
+                sessionIndex,
+                botMessage.id ?? messageIndex,
+              );
+              set(() => ({}));
+            },
+            onError(error) {
+              const isAborted = error.message.includes("aborted");
+              botMessage.content =
+                "\n\n" +
+                prettyObject({
+                  error: true,
+                  message: error.message,
+                });
+              botMessage.streaming = false;
+              userMessage.isError = !isAborted;
+              botMessage.isError = !isAborted;
 
-            set(() => ({}));
-            ChatControllerPool.remove(
-              sessionIndex,
-              botMessage.id ?? messageIndex,
-            );
+              set(() => ({}));
+              ChatControllerPool.remove(
+                sessionIndex,
+                botMessage.id ?? messageIndex,
+              );
 
-            console.error("[Chat] failed ", error);
+              console.error("[Chat] failed ", error);
+            },
+            onController(controller) {
+              // collect controller for stop/retry
+              ChatControllerPool.addController(
+                sessionIndex,
+                botMessage.id ?? messageIndex,
+                controller,
+              );
+            },
           },
-          onController(controller) {
-            // collect controller for stop/retry
-            ChatControllerPool.addController(
-              sessionIndex,
-              botMessage.id ?? messageIndex,
-              controller,
-            );
-          },
-        });
+          content,
+        );
       },
 
       getMemoryPrompt() {
@@ -435,19 +438,22 @@ export const useChatStore = create<ChatStore>()(
               content: Locale.Store.Prompt.Topic,
             }),
           );
-          api.llm.chat({
-            messages: topicMessages,
-            config: {
-              model: "gpt-3.5-turbo",
+          api.llm.chat(
+            {
+              messages: topicMessages,
+              config: {
+                model: "gpt-3.5-turbo",
+              },
+              onFinish(message) {
+                get().updateCurrentSession(
+                  (session) =>
+                    (session.topic =
+                      message.length > 0 ? trimTopic(message) : DEFAULT_TOPIC),
+                );
+              },
             },
-            onFinish(message) {
-              get().updateCurrentSession(
-                (session) =>
-                  (session.topic =
-                    message.length > 0 ? trimTopic(message) : DEFAULT_TOPIC),
-              );
-            },
-          });
+            Locale.Store.Prompt.Topic,
+          );
         }
 
         const modelConfig = session.mask.modelConfig;
@@ -484,24 +490,27 @@ export const useChatStore = create<ChatStore>()(
           historyMsgLength > modelConfig.compressMessageLengthThreshold &&
           modelConfig.sendMemory
         ) {
-          api.llm.chat({
-            messages: toBeSummarizedMsgs.concat({
-              role: "system",
-              content: Locale.Store.Prompt.Summarize,
-              date: "",
-            }),
-            config: { ...modelConfig, stream: true },
-            onUpdate(message) {
-              session.memoryPrompt = message;
+          api.llm.chat(
+            {
+              messages: toBeSummarizedMsgs.concat({
+                role: "system",
+                content: Locale.Store.Prompt.Summarize,
+                date: "",
+              }),
+              config: { ...modelConfig, stream: true },
+              onUpdate(message) {
+                session.memoryPrompt = message;
+              },
+              onFinish(message) {
+                console.log("[Memory] ", message);
+                session.lastSummarizeIndex = lastSummarizeIndex;
+              },
+              onError(err) {
+                console.error("[Summarize] ", err);
+              },
             },
-            onFinish(message) {
-              console.log("[Memory] ", message);
-              session.lastSummarizeIndex = lastSummarizeIndex;
-            },
-            onError(err) {
-              console.error("[Summarize] ", err);
-            },
-          });
+            Locale.Store.Prompt.Summarize,
+          );
         }
       },
 

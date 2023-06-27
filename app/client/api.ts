@@ -28,7 +28,7 @@ export interface ChatOptions {
 
   onUpdate?: (message: string, chunk: string) => void;
   onFinish: (message: string) => void;
-  onError?: (err: Error) => void;
+  onError?: (err: Error, statusCode?: number, content?: string) => void;
   onController?: (controller: AbortController) => void;
 }
 
@@ -38,7 +38,7 @@ export interface LLMUsage {
 }
 
 export abstract class LLMApi {
-  abstract chat(options: ChatOptions): Promise<void>;
+  abstract chat(options: ChatOptions, content: string): Promise<void>;
   abstract usage(): Promise<LLMUsage>;
 }
 

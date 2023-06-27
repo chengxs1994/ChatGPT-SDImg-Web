@@ -23,6 +23,7 @@ import {
 } from "react-router-dom";
 import { SideBar } from "./sidebar";
 import { useAppConfig } from "../store/config";
+import { ConfigProvider } from "antd";
 
 export function Loading(props: { noLogo?: boolean }) {
   return (
@@ -142,10 +143,18 @@ export function Home() {
   }
 
   return (
-    <ErrorBoundary>
-      <Router>
-        <Screen />
-      </Router>
-    </ErrorBoundary>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: "rgb(29, 147, 171)",
+        },
+      }}
+    >
+      <ErrorBoundary>
+        <Router>
+          <Screen />
+        </Router>
+      </ErrorBoundary>
+    </ConfigProvider>
   );
 }

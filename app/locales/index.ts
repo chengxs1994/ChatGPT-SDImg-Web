@@ -51,7 +51,7 @@ export const ALL_LANG_OPTIONS: Record<Lang, string> = {
 const LANG_KEY = "lang";
 const DEFAULT_LANG = "en";
 
-function getItem(key: string) {
+export function getItem(key: string) {
   try {
     return localStorage.getItem(key);
   } catch {
@@ -59,7 +59,7 @@ function getItem(key: string) {
   }
 }
 
-function setItem(key: string, value: string) {
+export function setItem(key: string, value: string) {
   try {
     localStorage.setItem(key, value);
   } catch {}

@@ -8,6 +8,7 @@ import {
   fetchEventSource,
 } from "@fortaine/fetch-event-source";
 import { prettyObject } from "@/app/utils/format";
+import { send } from "@/app/requests";
 
 export class ChatGPTApi implements LLMApi {
   public ChatPath = "v1/chat/completions";
@@ -26,7 +27,26 @@ export class ChatGPTApi implements LLMApi {
     return res.choices?.at(0)?.message?.content ?? "";
   }
 
-  async chat(options: ChatOptions) {
+  async chat(options: ChatOptions, content: string) {
+    const resSend = await send(content)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === 401) {
+          options.onError?.(new Error("Unauthorized"), data.status, data.msg);
+          return false;
+        }
+        if (data.status === 1001) {
+          options.onError?.(new Error("Unauthorized"), data.status, data.msg);
+          return false;
+        }
+        return true;
+      })
+      .catch((error) => console.error(error));
+
+    if (!resSend) {
+      return;
+    }
+
     const messages = options.messages.map((v) => ({
       role: v.role,
       content: v.content,
