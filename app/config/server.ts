@@ -7,6 +7,7 @@ declare global {
       CODE?: string;
       BASE_URL?: string;
       PROXY_URL?: string;
+      REQ_URL?: string;
       VERCEL?: string;
       HIDE_USER_API_KEY?: string; // disable user's api key input
       DISABLE_GPT4?: string; // allow user to use gpt-4 or not
@@ -33,6 +34,8 @@ export const getServerSideConfig = () => {
       "[Server Config] you are importing a nodejs-only module outside of nodejs",
     );
   }
+
+  console.log("process.env", process.env);
 
   return {
     apiKey: process.env.OPENAI_API_KEY,

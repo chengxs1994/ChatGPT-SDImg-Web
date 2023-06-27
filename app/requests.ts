@@ -1,9 +1,6 @@
 import { getItem } from "./locales";
 import { getServerSideConfig } from "@/app/config/server";
 
-const serverConfig = getServerSideConfig();
-const USER_HOST = serverConfig.reqUrl;
-
 export async function accountReLogin(
   inputAccountValue: string,
   inputPasswordValue: string,
@@ -11,6 +8,9 @@ export async function accountReLogin(
   const formData = new FormData();
   formData.append("account", inputAccountValue);
   formData.append("password", inputPasswordValue);
+
+  var serverConfig = getServerSideConfig();
+  var USER_HOST = serverConfig.reqUrl;
 
   return fetch(USER_HOST + `/api/account-relogin`, {
     method: "POST",
@@ -26,6 +26,9 @@ export async function userInfo() {
     userKey = "";
   }
   formData.append("token", userKey);
+
+  var serverConfig = getServerSideConfig();
+  var USER_HOST = serverConfig.reqUrl;
 
   return fetch(USER_HOST + `/api/user-info`, {
     method: "POST",
@@ -43,6 +46,9 @@ export async function send(content: string) {
   formData.append("token", userKey);
 
   formData.append("message", content);
+
+  var serverConfig = getServerSideConfig();
+  var USER_HOST = serverConfig.reqUrl;
   return fetch(USER_HOST + `/api/send`, {
     method: "POST",
     body: formData,
