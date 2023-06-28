@@ -18,6 +18,8 @@
 
 ![cover](./docs/images/user.jpg)
 
+![cover](./docs/images/img3.jpg)
+
 </div>
 
 ## 主要功能
@@ -36,7 +38,7 @@
 - [x] 用户注册登录 [demo已实现](https://www.xsai.online/#/login)
 - [x] 个人中心，次数限制，积分充值 [demo已实现](https://www.xsai.online/#/user)
 - [x] 邀请码，邀请链接分享 [demo已实现](https://www.xsai.online/#/user)
-- [ ] AI视频生成
+- [x] AI视频生成 [demo已实现](https://www.xsai.online/#/user)
 - [ ] 调用其他平台api
 
 ### 本地开发
