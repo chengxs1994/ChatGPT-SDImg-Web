@@ -20,6 +20,12 @@
 
 ![cover](./docs/images/img3.jpg)
 
+![cover](./docs/images/admin-login.jpg)
+
+![cover](./docs/images/admin1.jpg)
+
+![cover](./docs/images/admin2.jpg)
+
 </div>
 
 ## 主要功能
@@ -39,6 +45,7 @@
 - [x] 个人中心，次数限制，积分充值 [demo已实现](https://www.xsai.online/#/user)
 - [x] 邀请码，邀请链接分享 [demo已实现](https://www.xsai.online/#/user)
 - [x] AI视频生成 [demo已实现](https://www.xsai.online/#/user)
+- [ ] 后台功能，接受定制开发中
 - [ ] 调用其他平台api
 
 ### 本地开发
