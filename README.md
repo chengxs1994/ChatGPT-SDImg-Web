@@ -12,6 +12,11 @@
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/chengxs1994/ChatGPT-SDImg-Web)
 
 ## 效果展示
+#### AI二维码，扫码加好友
+<div>
+<img src="./docs/images/aiewm.jpg" style="width: 45%" />
+</div>
+
 ![cover](./docs/images/img.jpg)
 
 ![cover](./docs/images/img2.jpg)
@@ -35,6 +40,7 @@
 - 用户注册登录，个人中心
 - 次数限制，积分充值
 - 邀请码，邀请链接分享
+- AI二维码
 ### 持续更新，感谢Star。如需定制，欢迎联系
 
 ## 开源计划
@@ -45,6 +51,7 @@
 - [x] 个人中心，次数限制，积分充值 [demo已实现](https://www.xsai.online/#/user)
 - [x] 邀请码，邀请链接分享 [demo已实现](https://www.xsai.online/#/user)
 - [x] AI视频生成 [demo已实现](https://www.xsai.online/#/user)
+- [x] AI二维码 [demo已实现](https://www.xsai.online/#/img)
 - [ ] 后台功能，接受定制开发中
 - [ ] 调用其他平台api
 
