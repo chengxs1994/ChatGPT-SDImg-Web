@@ -1,0 +1,72 @@
+{
+  "name": "xmo/mineadmin",
+  "type": "project",
+  "keywords": [
+    "mineadmin",
+    "swoole",
+    "hyperf"
+  ],
+  "homepage": "https://www.mineadmin.com/",
+  "description": "Quickly build a background management system for web applications",
+  "license": "Apache-2.0",
+  "require": {
+    "xmo/jwt-auth": "0.6.*",
+    "xmo/mine-core": "^1.5",
+    "xmo/mine-office": "1.*",
+    "xmo/mine-translatable": "1.*"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.0",
+    "hyperf/devtool": "3.0.*",
+    "hyperf/ide-helper": "3.0.*",
+    "hyperf/testing": "3.0.*",
+    "hyperf/watcher": "3.0.*",
+    "mockery/mockery": "^1.0",
+    "phpstan/phpstan": "^1.0",
+    "swoole/ide-helper": "^5.0"
+  },
+  "suggest": {
+    "ext-openssl": "Required to use HTTPS.",
+    "ext-json": "Required to use JSON.",
+    "ext-pdo": "Required to use MySQL Client.",
+    "ext-pdo_mysql": "Required to use MySQL Client.",
+    "ext-redis": "Required to use Redis Client."
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "Api\\": "api/",
+      "Plugin\\": "plugin/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "HyperfTest\\": "./test/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "optimize-autoloader": true,
+    "sort-packages": true,
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true
+    }
+  },
+  "extra": [],
+  "scripts": {
+    "post-root-package-install": [
+      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+    ],
+    "post-autoload-dump": [
+      "rm -rf runtime/container"
+    ],
+    "test": "co-phpunit --prepend test/bootstrap.php -c phpunit.xml --colors=always",
+    "cs-fix": "php-cs-fixer fix $1",
+    "analyse": "phpstan analyse --memory-limit 500M -l 0 -c phpstan.neon ./app ./config ./libdev",
+    "start": [
+      "Composer\\Config::disableProcessTimeout",
+      "php ./bin/hyperf.php start"
+    ]
+  }
+}

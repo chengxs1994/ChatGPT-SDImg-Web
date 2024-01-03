@@ -1,0 +1,10 @@
+/.idea
+/.vscode
+/vendor
+/package
+/runtime
+/libdev
+*.log
+.env
+.gitee
+public/uploadfile/*
